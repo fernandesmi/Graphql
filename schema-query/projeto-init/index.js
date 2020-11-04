@@ -30,7 +30,7 @@ const typeDefs = gql`
     #tipo definido por mim
     #por não ser um scalar, ao usar em uma query, devem ser passados os campos dele
     type Usuario {
-        id: ID!
+        id: Int!
         nome: String!
         email: String!
         idade: Int
@@ -55,6 +55,7 @@ const typeDefs = gql`
         produtoEmDestaque: Produto
         numerosMegaSena: [Int!]! #obrigatoriamente é um array de inteiros
         usuarios: [Usuario]
+        usuario(id: Int): Usuario
     }
 `
 
@@ -102,6 +103,11 @@ const resolvers = {
         },
         usuarios() {
             return usuarios
+        },
+        usuario(_, {id}) {
+            const sels = usuarios
+                        .filter(u => u.id === id)
+            return sels ? sels[0] : null
         }
     }
 
