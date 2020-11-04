@@ -26,6 +26,12 @@ const typeDefs = gql`
 `
 
 const resolvers = {
+
+    Usuario: {
+        salario(usuario) {
+            return usuario.salario_real
+        }
+    },
     Query: {
         ola() {
             return 'AAAAA'
@@ -39,7 +45,7 @@ const resolvers = {
                 nome: 'Ana da Web',
                 email: 'anadaweb@email.com',
                 idade: 23,
-                salario: 1234.56,
+                salario_real: 1234.56,
                 vip: true
             }
         }
