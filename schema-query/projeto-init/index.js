@@ -1,5 +1,27 @@
 const { ApolloServer, gql } = require('apollo-server')
 
+const usuarios= [
+    {
+        id: 1,
+        nome: "João",
+        email: "joao@email.com",
+        idade: 12
+    },
+    {
+        id: 2,
+        nome: "Andre",
+        email: "andre@email.com",
+        idade: 13
+    },
+    {
+        id: 3,
+        nome: "Maria",
+        email: "maria@email.com",
+        idade: 15
+    }
+]
+
+
 //template string tagged template
 const typeDefs = gql`
     #Cria um scalar além dos definidos pelo graphql
@@ -31,6 +53,8 @@ const typeDefs = gql`
         horaAtual: Date!
         usuarioLogado: Usuario
         produtoEmDestaque: Produto
+        numerosMegaSena: [Int!]! #obrigatoriamente é um array de inteiros
+        usuarios: [Usuario]
     }
 `
 
@@ -69,6 +93,15 @@ const resolvers = {
                 preco: 2.99,
                 desconto: .5
             }
+        },
+        numerosMegaSena() {
+            const crescente = (a,b) => a - b
+            return Array(6).fill(0)
+                    .map(() => parseInt(Math.random() * 60 + 1))
+                    .sort(crescente)
+        },
+        usuarios() {
+            return usuarios
         }
     }
 
